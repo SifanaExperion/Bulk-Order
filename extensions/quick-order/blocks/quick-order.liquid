@@ -347,22 +347,21 @@ color: orange;
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 
 <script>
- async function loadPlanData() {
-  try {
-    const response = await fetch("/apps/bulk-order");
-    const shopPlanData = await response.json();
-    console.log("Plan Data:", shopPlanData);
-
-  } catch (err) {
-    console.error("Error fetching plan data", err);
+  const loadPlanData = async () => {
+    try {
+      const response = await fetch("/apps/bulk-order");
+      const shopPlanData = await response.json();
+      console.log("plan data",shopPlanData)
+      return shopPlanData;
+    } catch (err) {
+      console.error("Error fetching plan data", err);
+    }
   }
-}
 
-loadPlanData();
-
-
-applyFeatureAccess(shopPlanData.features);
-function applyFeatureAccess(features) {
+async function applyFeatureAccess() {
+  const shopPlanData = await loadPlanData();
+  console.log("shopPlandata",shopPlanData )
+  const features =  shopPlanData.features;
   const uploadSection = document.querySelector("#file-upload-section");
   if (!uploadSection) return; 
   if (!features.csvUpload) {
@@ -376,7 +375,7 @@ function applyFeatureAccess(features) {
     document.querySelector("#csv-sku").style.display = "block";  
   }
 }
-
+applyFeatureAccess();
 
    const ITEMS_PER_PAGE = 5;
   let currentPage = 1;
@@ -624,6 +623,7 @@ function clearQuickOrderList() {
 async function addToQuickOrder(product, quantity) {
   const variantId = await fetchDefaultVariantId(product.handle);
   const quantityToAdd = parseInt(quantity);
+  const shopPlanData = await loadPlanData();
   const features = shopPlanData.features; 
   const productLimitMessage = document.getElementById("productLimitMessage");
 
@@ -740,6 +740,8 @@ async function fetchDefaultVariantId(handle) {
   function quickOrderCheckout() {
     window.location.href = '/checkout';
   }
+  
+
 </script>
 
 {% schema %}

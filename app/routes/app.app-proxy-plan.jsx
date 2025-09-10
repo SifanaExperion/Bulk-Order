@@ -10,8 +10,8 @@ export const loader = async ({ request }) => {
 
   const shop = params.get("shop");
   const signature = params.get("signature");
-
-  const isValid = await authenticate.proxy(request); 
+    
+  const isValid = await authenticate.public.appProxy(request);
   if (!isValid) {
     return json({ error: "Unauthorized" }, { status: 401 });
   }
