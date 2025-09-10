@@ -1,0 +1,870 @@
+<style>
+.quick-order-wrapper {
+  padding: 20px;
+}
+.quick-order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.quick-order-table th, .quick-order-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+  font-size:{{ block.settings.font_size }};
+  font-family:{{ block.settings.font_family }};
+  color: {{ block.settings.text_color }};
+}
+.quick-order-table th {
+  background-color:{{ block.settings.table_header_background }};
+  color: {{block.settings.table_header_text}};
+} 
+.search-input {
+  border: 0;
+  border-bottom: 2px solid {{ block.settings.search_bar_border_color }};
+  outline: none;
+  box-shadow: none;
+  padding: 6px;
+  text-align: {{ block.settings.search_bar_text_align }};
+  outline: none;
+  box-shadow: none;
+  margin: 20px auto 0;
+  display: block;
+  width: {{ block.settings.search_bar_width_percent }}px;
+  color: {{ block.settings.text_color }};
+  font-size: {{ block.settings.font_size }}px;
+  font-family:{{ block.settings.font_family }}
+}
+.suggestions {
+  width: 50%;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  z-index: 100;
+  position: relative;
+  color:{{block.settings.text_color }};
+  font-size: {{ block.settings.font_size }}px;
+  font-family:{{ block.settings.font_family }};
+
+}
+.suggestion-item {
+  padding: 10px;
+  border-top: 1px solid #eee;
+  cursor: pointer;
+}
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px;
+  color:{{ block.settings.button_text_color }};
+}
+.buttons button {
+  background-color:{{ block.settings.button_color }};
+  color: {{ block.settings.button_text_color }};
+  padding: 10px 16px;
+  border: none;
+  cursor: pointer;
+}
+.buttons button:hover{
+    background-color:{{ block.settings.button_hover_color }};
+}
+.csv-sku {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+    padding: 20px;
+    max-width: 1300px;
+    margin-top:30px;
+    font-family: sans-serif;
+  }
+
+  .csv-sku > div {
+    background-color: #f9f9f9;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+    flex: 1 1 48%;
+    min-width: 300px;
+    box-sizing: border-box;
+  }
+
+  h3 {
+    margin-bottom: 10px;
+  }
+
+  textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: vertical;
+  }
+
+  input[type="file"] {
+    margin-top: 10px;
+  }
+
+  .csv-sku p {
+    font-size: {{block.settings.font_size}};
+    color: {{block.settings.text_color}};
+    font-family:{{ block.settings.font_family }};
+    margin-top: 10px;
+  }
+  .remove-button{
+  background-color:{{ block.settings.button_color }};
+  color:{{ block.settings.button_text_color }};;
+  border:none;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  }
+
+  .buttons,
+  .csv-sku button {
+    margin-top: 15px;
+  }
+
+  .csv-sku button {
+    background-color:{{ block.settings.button_color }};
+    color: {{ block.settings.button_text_color }};
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .csv-sku button:hover {
+    background-color:{{ block.settings.button_hover_color }};
+  }
+
+  .csv-sku a {
+    color:#8686AC;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .csv-sku a:hover {
+    text-decoration: underline;
+  }
+  .custom-file-upload-area {
+  cursor: pointer;
+  display: block;
+  text-align: center;
+}
+.upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+}
+
+.upload-box:hover {
+  border-color: #999;
+}
+
+.upload-icon {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.choose-file {
+  color: #005eff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+.textArea{
+   color:{{block.settings.text_color }};
+  font-size: {{ block.settings.font_size }}px;
+  font-family:{{ block.settings.font_family }};
+
+}
+
+.hidden-file-input {
+  display: none;
+}
+.file-name-display {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  .sample-download{
+  color:{{block.settings.text_color }};
+  font-size: {{ block.settings.font_size }}px;
+  font-family:{{ block.settings.font_family }};
+  }
+  .table-pagination {
+  display: flex;
+  flex-direction: column;  
+  align-items: center;    
+  gap: 10px;               
+}
+  .pagination {
+    margin-top: 10px;
+    display: flex;
+    gap: 6px;
+    
+  }
+  .pagination button {
+  padding: 1px 2px;
+  margin: 2px;
+  border: none;
+  background: white;
+  cursor: pointer;
+  color:black;
+}
+ .pagination button:hover{
+color: orange;
+}
+.pagination button:disabled {
+  cursor: default;
+  color: orange;
+}
+.search-wrapper {
+  display:flex;
+  gap:none;
+}
+
+.search-input {
+  padding-right: 30px; 
+  height: 35px;
+  font-size: 14px;
+  width: {{ block.settings.search_bar_width_percent }}px;
+}
+.search-container {
+  position: relative;
+  width: fit-content;
+  margin: 15px auto 0;
+  font-family: {{ block.settings.font_family }};
+  color: {{ block.settings.text_color }};
+}
+
+.search-icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: {{ block.settings.text_color }};
+  font-size: {{ block.settings.font_size }}px;
+  pointer-events: none;
+}
+
+{% comment %} .search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; 
+  font-size: 16px;
+  color: #888;
+} {% endcomment %}
+
+
+  @media (max-width: 768px) {
+    .csv-sku {
+      flex-direction: column;
+    }
+
+    .csv-sku > div {
+      flex: 1 1 100%;
+    }
+  }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<div class="search-container">
+  <i class="fas fa-search search-icon"></i>
+<input type="text" class="search-input" id="quick-order-search" placeholder="Search by product name" />
+</div>
+<div class="quick-order-wrapper">
+  <div class="suggestions" id="quick-order-suggestions"></div>
+  <div class="table-pagination">
+  <table class="quick-order-table">
+<thead>
+      <tr>
+        <th>Item(s)</th>
+        <th>Image</th>
+        <th>Qty</th>
+        <th>Subtotal</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="quick-order-body">
+    </tbody>
+  </table>
+  <div class="pagination" id="pagination"></div>
+  </div>
+  <div id="productLimitMessage" style="margin-top: 5px; font-size: 14px; color: red;"></div >
+  <div class="csv-sku" id="csv-sku" >
+  <div>
+    <h3>Enter multiple products</h3>
+    <textarea id="bulkInput" class="textArea" rows="6" placeholder="Enter multiple products, separate by new lines"></textarea>
+    <div id="bulkInputMessage" style="margin-top: 5px;font-size:12px;"></div>
+    <p>
+      Format: product handle,qty,option1,option2<br>
+      E.g simple: Signature-blend-body-massage-oil,9<br>
+    </p>
+    <button onclick="handleBulkEntry()">ADD TO LIST</button>
+  </div>
+
+  <div id="file-upload-section">
+  <h3>Add from file</h3>
+  <label for="fileUpload" class="custom-file-upload-area">
+    <div class="upload-box">
+      <div class="upload-icon"><i class="fas fa-file-upload"></i></div>
+      <p> <span class="choose-file">Choose file</span></p>
+    </div>
+  </label>
+  <input type="file" id="fileUpload" class="hidden-file-input" accept=".csv,.xml" />
+  <div id="fileName" class="file-name-display"></div>
+  <button onclick="handleFileUpload()">UPLOAD NOW</button>
+  <div id="csvUploadMessage" style="margin-top: 5px; font-size: 12px;"></div>
+  <br />
+  <div class="sample-download">
+  <a href="https://github.com/sifanaks/bulk-order-sample-files/releases/download/v1.0.0/sample.csv" download>Download Sample CSV</a>
+  <br />
+  <a href="https://github.com/sifanaks/bulk-order-sample-files/releases/download/v1.0.0/sample.xml" download>Download a sample XML file</a>
+  </div>
+</div>
+</div>
+  <div class="buttons">
+  <button onclick="clearQuickOrderList()">CLEAR ALL LIST</button>
+    <button onclick="quickOrderAddToCart()">ADD TO CART</button>
+    <button onclick="quickOrderCheckout()">CHECKOUT</button>
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+
+<script>
+ async function loadPlanData() {
+  try {
+    const response = await fetch("/apps/bulk-order");
+    const shopPlanData = await response.json();
+    console.log("Plan Data:", shopPlanData);
+
+  } catch (err) {
+    console.error("Error fetching plan data", err);
+  }
+}
+
+loadPlanData();
+
+
+applyFeatureAccess(shopPlanData.features);
+function applyFeatureAccess(features) {
+  const uploadSection = document.querySelector("#file-upload-section");
+  if (!uploadSection) return; 
+  if (!features.csvUpload) {
+    uploadSection.style.display = "none";   
+  } else {
+    uploadSection.style.display = "block";  
+  }
+  if (!features.multipleHandle) {
+    document.querySelector("#csv-sku").style.display = "none";  
+  } else {
+    document.querySelector("#csv-sku").style.display = "block";  
+  }
+}
+
+
+   const ITEMS_PER_PAGE = 5;
+  let currentPage = 1;
+const fileInput = document.getElementById('fileUpload');
+  const fileNameDisplay = document.getElementById('fileName');
+
+  fileInput.addEventListener('change', function () {
+    if (fileInput.files.length > 0) {
+      fileNameDisplay.textContent = `Selected file: ${fileInput.files[0].name}`;
+    } else {
+      fileNameDisplay.textContent = '';
+    }
+  });
+  let quickOrderItems = [];
+  document.getElementById("quick-order-search").addEventListener("input", async (e) => {
+  const query = e.target.value.trim();
+  const suggestionBox = document.getElementById("quick-order-suggestions");
+  suggestionBox.innerHTML = "";
+  if (query.length < 3) return;
+
+  try {
+    const json = await fetchProductSuggestions(query); 
+    const products = json.products || json;
+    products.forEach((product) => {
+      const itemDiv = document.createElement("div");
+      itemDiv.className = "suggestion-item";
+      itemDiv.innerHTML = `
+       <div style="display: flex; justify-content: space-between; align-items: center;">
+  <div>
+    <strong>${product.title}</strong><br/>
+    $${product.price}
+  </div>
+  <img src="${product.image}" alt="${product.title}" style="width: 50px; height: auto; margin-left: 10px;" />
+</div>
+      `;
+      itemDiv.onclick = () => {
+        addToQuickOrder(product,1);
+        suggestionBox.innerHTML = "";
+        document.getElementById("quick-order-search").value = "";
+      };
+      suggestionBox.appendChild(itemDiv);
+    });
+  } catch (err) {
+    console.error("Error fetching suggestions:", err);
+  }
+});
+async function handleBulkEntry() {
+  const messageBox = document.getElementById("bulkInputMessage");
+  const input = document.getElementById("bulkInput").value.trim();
+
+  if (!input) {
+    messageBox.textContent = `Please enter at least one product.`;
+    messageBox.style.color = "red";
+    setTimeout(() => {
+      messageBox.textContent = "";
+    }, 5000);
+    return;
+  }
+
+  const lines = input.split("\n");
+  let hasError = false;
+  let productsAdded = 0;
+
+  for (const line of lines) {
+    const [rawHandle, rawQty = "1"] = line.split(",");
+    const handle = rawHandle.trim();
+    const qty = parseInt(rawQty.trim());
+
+    if (!handle) {
+      hasError = true;
+      continue;
+    }
+
+    const product = await getProductByHandle(handle);
+
+    if (!product) {
+      hasError = true;
+      console.warn(`Product "${handle}" not found`);
+      continue;
+    }
+
+    if (isNaN(qty) || qty <= 0) {
+      hasError = true;
+      console.warn(`Invalid quantity for "${handle}":`, rawQty);
+      continue;
+    }
+
+    await addToQuickOrder(product, qty);
+    productsAdded++;
+  }
+
+  renderTable();
+
+  if (productsAdded > 0) {
+    messageBox.textContent = `${productsAdded} product(s) added successfully.`;
+    messageBox.style.color = "green";
+  }
+
+  if (hasError) {
+    messageBox.textContent += ` Some entries couldn't be processed. Check the handles or quantities.`;
+    messageBox.style.color = "orange";
+  }
+
+  setTimeout(() => {
+    messageBox.textContent = "";
+  }, 5000);
+}
+
+const fetchProductSuggestions = async (query) => {
+  const response = await fetch(
+    `/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=5`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch suggestions");
+  }
+
+  const data = await response.json();
+  return data.resources.results;
+};
+
+async function getProductByHandle(handle) {
+  try {
+    const response = await fetch(`/products/${handle}.js`);
+    if (!response.ok) throw new Error("Product not found");
+    return await response.json();
+  } catch (err) {
+    console.error(`Error fetching product with handle "${handle}":`, err);
+    return null;
+  }
+}
+
+function handleFileUpload() {
+  const messageBox = document.getElementById("csvUploadMessage");
+  const file = document.getElementById("fileUpload").files[0];
+
+  if (!file) {
+    messageBox.textContent = `Please select a file`;
+    messageBox.style.color = "red";
+    setTimeout(() => {
+      messageBox.textContent = "";
+    }, 5000);
+    return;
+  }
+
+  const ext = file.name.split('.').pop().toLowerCase();
+
+  if (ext === 'csv') {
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: async function(results) {
+        let hasError = false;
+
+        for (const row of results.data) {
+          const handle = row.handle?.trim();
+          if (!handle) {
+            hasError = true;
+            continue;
+          }
+
+          const product = await getProductByHandle(handle);
+          if (!product || !product.variants?.length) {
+            hasError = true;
+            continue;
+          }
+            const quantity = parseInt(row.quantity || 1);// default: no limit
+         addToQuickOrder(product,quantity);
+        }
+
+        renderTable();
+        messageBox.textContent = hasError
+          ? `Some CSV rows couldn't be processed. Please check the handles.`
+          : `CSV products added successfully.`;
+
+        messageBox.style.color = hasError ? "red" : "green";
+
+        setTimeout(() => {
+          messageBox.textContent = "";
+        }, 5000);
+      }
+    });
+
+  } else if (ext === 'xml') {
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(e.target.result, "text/xml");
+      const items = xmlDoc.getElementsByTagName("item");
+       if (!items || items.length === 0) {
+      messageBox.textContent = `No <item> elements found in the XML file. Please check the format.`;
+      messageBox.style.color = "red";
+      return;
+    }
+      let hasError = false;
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const handle = item.getElementsByTagName("handle")[0]?.textContent?.trim();
+        const quantityText = item.getElementsByTagName("quantity")[0]?.textContent || "1";
+        const quantity = parseInt(quantityText);
+
+        if (!handle) {
+          hasError = true;
+          continue;
+        }
+
+        const product = await getProductByHandle(handle);
+        if (!product || !product.variants?.length) {
+          hasError = true;
+          continue;
+        }
+     addToQuickOrder(product,quantity)
+      }
+
+      renderTable();
+
+      messageBox.textContent = hasError
+        ? `Some XML items couldn't be processed. Please check the handles.`
+        : `XML products added successfully.`;
+
+      messageBox.style.color = hasError ? "red" : "green";
+
+      setTimeout(() => {
+        messageBox.textContent = "";
+      }, 5000);
+    };
+
+    reader.readAsText(file);
+  } else {
+    messageBox.textContent = `Unsupported file type. Please upload CSV or XML.`;
+    messageBox.style.color = "red";
+    setTimeout(() => {
+      messageBox.textContent = "";
+    }, 5000);
+  }
+}
+
+
+function clearQuickOrderList() {
+  quickOrderItems = [];
+  renderTable();
+}
+
+async function addToQuickOrder(product, quantity) {
+  const variantId = await fetchDefaultVariantId(product.handle);
+  const quantityToAdd = parseInt(quantity);
+  const features = shopPlanData.features; 
+  const productLimitMessage = document.getElementById("productLimitMessage");
+
+
+  if (isNaN(quantityToAdd) || quantityToAdd <= 0) {
+    console.warn("Invalid quantity:", quantity);
+    return;
+  }
+  const currentProducts = quickOrderItems.length;
+  const maxProducts = features?.maxProducts || infinity; 
+  const existingIndex = quickOrderItems.findIndex(item => item.variantId === variantId);
+
+  if (existingIndex === -1 && currentProducts >= maxProducts && maxProducts !== "unlimited") {
+  productLimitMessage.textContent = ` Limit reached: Your plan allows only ${maxProducts} products in Quick Order.`;
+    return;
+  }
+
+  // 🔹 Update or add product
+  if (existingIndex !== -1) {
+    quickOrderItems[existingIndex].quantity += quantityToAdd;
+  } else {
+    quickOrderItems.push({
+      title: product.title,
+      image: product.featured_image?.url || product.image || product.images[0],
+      variantId: variantId,
+      price: parseFloat(product.price),
+      quantity: quantityToAdd
+    });
+  }
+
+  renderTable();
+}
+
+ function renderTable() {
+  const tbody = document.getElementById("quick-order-body");
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+  const paginatedItems = quickOrderItems.slice(start, end);
+
+  tbody.innerHTML = paginatedItems.map((item, i) => `
+    <tr>
+      <td>${item.title}</td>
+      <td><img src="${item.image}" alt="${item.title}" style="max-width: 60px; max-height: 60px;" /></td>
+      <td>
+        <input type="number" value="${item.quantity}" min="1" onchange="updateQty(${start + i}, this.value)" />
+      </td>
+      <td>${(item.price * item.quantity).toFixed(2)}</td>
+      <td><button class="remove-button" onclick="removeItem(${start + i})">Remove</button></td>
+    </tr>
+  `).join('');
+  renderPagination();
+}
+
+function renderPagination() {
+  const paginationDiv = document.getElementById("pagination");
+  const totalPages = Math.ceil(quickOrderItems.length / ITEMS_PER_PAGE);
+  let buttons = '';
+  buttons += `<button onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+               <i class="fa-solid fa-angles-left"></i>
+              </button>`;
+  for (let i = 1; i <= totalPages; i++) {
+    buttons += `<button onclick="goToPage(${i})" ${i === currentPage ? 'disabled' : ''}>
+                  ${i}
+                </button>`;
+  }
+  buttons += `<button onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+               <i class="fa-solid fa-angles-right"></i>
+              </button>`;
+
+  paginationDiv.innerHTML = buttons;
+}
+
+  function goToPage(page) {
+    currentPage = page;
+    renderTable();
+  }
+
+  function updateQty(index, qty) {
+    quickOrderItems[index].quantity = parseInt(qty);
+    renderTable();
+  }
+
+  function removeItem(index) {
+   quickOrderItems.splice(index, 1);
+    const totalPages = Math.ceil(quickOrderItems.length / ITEMS_PER_PAGE);
+    if (currentPage > totalPages) currentPage = totalPages;
+    renderTable();
+  }
+
+  async function quickOrderAddToCart() {
+console.log("quick order",quickOrderItems);
+    const formData = {
+      items: quickOrderItems.map(item => ({
+        id: item.variantId,
+        quantity: item.quantity
+      }))
+    };
+
+    await fetch(`/cart/add.js`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify(formData)
+    });
+    window.location.href = '/cart';
+  }
+async function fetchDefaultVariantId(handle) {
+  const res = await fetch(`/products/${handle}.js`);
+  if (!res.ok) throw new Error("Failed to fetch product");
+  const product = await res.json();
+  return product.variants[0]?.id;
+}
+  function quickOrderCheckout() {
+    window.location.href = '/checkout';
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Bulk Order",
+  "target": "section",
+  "settings": [
+     {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font Size (px)",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+     {
+  "type": "select",
+  "id": "font_family",
+  "label": "Font family",
+  "default": "Arial",
+  "options": [
+    { "value": "Arial", "label": "Arial" },
+    { "value": "Georgia", "label": "Georgia" },
+    { "value": "Times New Roman", "label": "Times New Roman" },
+    { "value": "Courier New", "label": "Courier New" }
+  ]
+}
+,
+    {
+      "type": "color",
+      "id": "table_background",
+      "label": "Table Background Color",
+      "default": "#ffffff"
+    },
+    
+    {
+      "type": "color",
+      "id": "table_header_background",
+      "label": "Table Header Background",
+      "default": "#0f0e47"
+    },
+    {
+      "type": "color",
+      "id": "table_header_text",
+      "label": "Table Header Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button Background Color",
+      "default": "#272757"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text Color",
+      "default": "#ffffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button Hover Background Color",
+      "default": "#8686AC"
+    },
+     {
+
+      "type": "color",
+      "id": "search_border_color",
+      "label": "Search border Color",
+      "default": "#e49669ff"
+    },
+     {
+      "type": "header",
+      "content": "Search Bar Settings"
+    },
+    {
+      "type": "paragraph",
+      "content": "Customize the look and feel of the search bar below."
+    },
+    {
+      "type": "color",
+      "id": "search_bar_border_color",
+      "label": "Border Color",
+      "default": "#FFA500"
+    },
+    {
+  "type": "range",
+  "id": "search_bar_width_percent",
+  "label": "Width (px)",
+  "min": 100,
+  "max": 500,
+  "step": 100,
+  "default": 300
+    },
+   
+     {
+      "type": "range",
+      "id": "search_bar_padding",
+      "label": "Padding (px)",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "select",
+      "id": "search_bar_text_align",
+      "label": "Text Align",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    }
+   
+  ],
+}
+{% endschema %}
+

@@ -1,0 +1,40 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "b82877dd3c6cc04deac3b24c3f23d763"
+name = "bulk-order"
+handle = "bulk-order-20"
+application_url = "https://ion-get-prev-chip.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+
+[webhooks]
+api_version = "2025-07"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/scopes_update" ]
+  uri = "/webhooks/app/scopes_update"
+
+  [app_proxy]
+  url = "/app/app-proxy-plan"
+  subpath = "bulk-order"
+  prefix = "apps"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products,read_products,write_app_proxy"
+
+[auth]
+redirect_urls = [
+  "https://ion-get-prev-chip.trycloudflare.com/auth/callback",
+  "https://ion-get-prev-chip.trycloudflare.com/auth/shopify/callback",
+  "https://ion-get-prev-chip.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
