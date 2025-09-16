@@ -307,12 +307,12 @@ color: orange;
   </div>
   <div id="productLimitMessage" style="margin-top: 5px; font-size: 14px; color: red;"></div >
   <div class="csv-sku" id="csv-sku" >
-  <div>
+  <div id="handle-bulk">
     <h3>Enter multiple products</h3>
     <textarea id="bulkInput" class="textArea" rows="6" placeholder="Enter multiple products, separate by new lines"></textarea>
     <div id="bulkInputMessage" style="margin-top: 5px;font-size:12px;"></div>
     <p>
-      Format: product handle,qty,option1,option2<br>
+      Format: product handle,qty<br>
       E.g simple: Signature-blend-body-massage-oil,9<br>
     </p>
     <button onclick="handleBulkEntry()">ADD TO LIST</button>
@@ -365,14 +365,14 @@ async function applyFeatureAccess() {
   const uploadSection = document.querySelector("#file-upload-section");
   if (!uploadSection) return; 
   if (!features.csvUpload) {
-    uploadSection.style.display = "none";   
+    uploadSection.style.display = "none";
   } else {
     uploadSection.style.display = "block";  
   }
   if (!features.multipleHandle) {
-    document.querySelector("#csv-sku").style.display = "none";  
+    document.querySelector("#handle-bulk").style.display = "none";  
   } else {
-    document.querySelector("#csv-sku").style.display = "block";  
+    document.querySelector("#handle-bulk").style.display = "block";  
   }
 }
 applyFeatureAccess();
@@ -633,10 +633,10 @@ async function addToQuickOrder(product, quantity) {
     return;
   }
   const currentProducts = quickOrderItems.length;
-  const maxProducts = features?.maxProducts || infinity; 
+  const maxProducts = features?.maxProducts || "infinity"; 
   const existingIndex = quickOrderItems.findIndex(item => item.variantId === variantId);
 
-  if (existingIndex === -1 && currentProducts >= maxProducts && maxProducts !== "unlimited") {
+  if (existingIndex === -1 && currentProducts >= maxProducts && maxProducts !== "infinity") {
   productLimitMessage.textContent = ` Limit reached: Your plan allows only ${maxProducts} products in Quick Order.`;
     return;
   }

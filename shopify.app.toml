@@ -20,6 +20,10 @@ api_version = "2025-07"
   topics = [ "app/scopes_update" ]
   uri = "/webhooks/app/scopes_update"
 
+  [[webhooks.subscriptions]]
+  topics = [ "app_subscriptions/update" ]
+  uri = "/webhooks/app-subscription-update"
+
   [app_proxy]
   url = "/app/app-proxy-plan"
   subpath = "bulk-order"

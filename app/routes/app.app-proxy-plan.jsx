@@ -27,24 +27,23 @@ export const loader = async ({ request }) => {
 
 function getFeaturesForPlan(plan) {
   switch (plan) {
-    case "base":
+     case "FREE_PLAN":
       return {
         maxProducts: 10,
         csvUpload: false,
-        advancedSearch: false,
+        multipleHandle: false,
       };
-    case "pro":
+    case "BASE_PLAN":
       return {
-        maxProducts: 50,
+        maxProducts: 20,
         csvUpload: true,
-        advancedSearch: true,
+        multipleHandle: false,
       };
-    case "enterprise":
+    case "PRO_PLAN":
       return {
-        maxProducts: "unlimited",
+        maxProducts: "infinity",
         csvUpload: true,
-        advancedSearch: true,
-        prioritySupport: true,
+        multipleHandle: true,
       };
     default:
       return {};
