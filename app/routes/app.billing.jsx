@@ -71,7 +71,6 @@ export async function loader({ request }) {
 export default function BillingPage() {
   const { activePlan } = useLoaderData();
   const [showCancelModal, setShowCancelModal] = useState(false);
-
   const handleSubscribe = async (plan) => {
     const response = await fetch("/app/billing", {
       method: "POST",

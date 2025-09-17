@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { Page, Layout, Card, Text } from "@shopify/polaris";
+import { Page, Layout, Card, Text ,InlineStack ,Button,Link} from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
 
 export async function loader({ request }) {
@@ -46,6 +46,12 @@ export default function BillingPage() {
               <Text variant="bodyMd">
                 You don't have an active subscription yet. Please choose a plan.
               </Text>
+              <Button
+          variant="primary"
+          url="/app/billing"
+            >
+         Select a plan
+         </Button>
             </Card>
         </Layout>
       </Page>
