@@ -1,4 +1,11 @@
 <style>
+  .quick-order-container {
+    display:flex;
+ align-items: center;
+  max-width: 1200px; 
+  margin: 0 auto;   
+  text-align: center; 
+}
 .quick-order-wrapper {
   padding: 20px;
 }
@@ -261,15 +268,39 @@ color: orange;
   pointer-events: none;
 }
 
-{% comment %} .search-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none; 
-  font-size: 16px;
-  color: #888;
-} {% endcomment %}
+#quick-order-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    min-width: 220px;
+    max-width: 300px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
+  }
+
+  #quick-order-toast.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  /* Success (green) */
+  #quick-order-toast.success {
+    background: #28a745;
+  }
+
+  /* Error (red) */
+  #quick-order-toast.error {
+    background: #dc3545;
+  }
 
 
   @media (max-width: 768px) {
@@ -283,6 +314,8 @@ color: orange;
   }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<div class="quick-order-extension">
+<div class="quick-order-container">
 <div class="search-container">
   <i class="fas fa-search search-icon"></i>
 <input type="text" class="search-input" id="quick-order-search" placeholder="Search by product name" />
@@ -345,6 +378,9 @@ color: orange;
   </div>
 </div>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+<div id="quick-order-toast"></div>
+</div>
+</div>
 
 <script>
   const loadPlanData = async () => {
@@ -713,24 +749,47 @@ function renderPagination() {
     renderTable();
   }
 
-  async function quickOrderAddToCart() {
-console.log("quick order",quickOrderItems);
-    const formData = {
-      items: quickOrderItems.map(item => ({
-        id: item.variantId,
-        quantity: item.quantity
-      }))
-    };
+ async function quickOrderAddToCart() {
+  const formData = {
+    items: quickOrderItems.map(item => ({
+      id: item.variantId,
+      quantity: item.quantity
+    }))
+  };
 
-    await fetch(`/cart/add.js`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json' 
-      },
+  console.log("form data, before fetch", formData);
+
+  try {
+    const response = await fetch("/cart/add.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData)
     });
-    window.location.href = '/cart';
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      showToast(errorData.description || "❌ Check if stocks are available", "error");
+      return;
+    }
+
+    await response.json();
+    showToast("✅ Item added to cart", "success");
+
+  } catch (err) {
+    console.error("Add to cart failed", err);
+    showToast("⚠️ Something went wrong. Try again.", "error");
   }
+}
+
+function showToast(message, type = "success") {
+  const toast = document.getElementById("quick-order-toast");
+  toast.textContent = message;
+  toast.className = `show ${type}`;
+
+  setTimeout(() => {
+    toast.className = toast.className.replace("show", "");
+  }, 3000); // hide after 3s
+}
 async function fetchDefaultVariantId(handle) {
   const res = await fetch(`/products/${handle}.js`);
   if (!res.ok) throw new Error("Failed to fetch product");

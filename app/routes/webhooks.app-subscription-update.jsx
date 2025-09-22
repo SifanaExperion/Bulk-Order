@@ -5,14 +5,11 @@ import db from "../db.server";
 export const action = async ({ request }) => {
   console.log("subscription webhook called");
   const { topic, shop, payload } = await authenticate.webhook(request);
-
   if (topic === "APP_SUBSCRIPTIONS_UPDATE") {
     try {
       const subscription = payload?.app_subscription;
-
       if (subscription) {
         let activePlan = null;
-
         if (subscription.status === "ACTIVE") {
           activePlan = subscription.name;
         } else if (
@@ -21,7 +18,6 @@ export const action = async ({ request }) => {
         ) {
           activePlan = "FREE_PLAN"; 
         }
-
         await db.shop.upsert({
           where: { shop },
           update: { plan: activePlan },
