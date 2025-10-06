@@ -3,10 +3,12 @@ import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { json } from "@remix-run/node";
 import { authenticate } from "../shopify.server";
+import { Redirect } from "@shopify/app-bridge/actions";
+import { useAppBridge } from "@shopify/app-bridge-react";
 
 export async function action({ request }) {
   const { billing ,session} = await authenticate.admin(request);
-    const shop = session.shop.replace(".myshopify.com", "");
+  const shop = session.shop.replace(".myshopify.com", "");
   const body = await request.json();
   const { actionType, plan } = body;
   const billingCheck = await billing.require({
@@ -35,7 +37,6 @@ export async function action({ request }) {
     isTest: true,
     prorate: true,
     });
-
     return json({
       confirmationUrl: response.confirmationUrl,
       userErrors: response.userErrors || [],
@@ -69,6 +70,9 @@ export async function loader({ request }) {
 }
 
 export default function BillingPage() {
+    const app = useAppBridge();
+
+
   const { activePlan } = useLoaderData();
   const [showCancelModal, setShowCancelModal] = useState(false);
   const handleSubscribe = async (plan) => {
@@ -84,37 +88,35 @@ export default function BillingPage() {
       return;
     }
 
-    if (!confirmationUrl) {
+    if (!confirmationUrl)  
+      {
       alert("Something went wrong. Please try again.");
       return;
     }
-
-    window.top.location.href = confirmationUrl;
-  };
-
+    redirect.dispatch(Redirect.Action.APP, '/app/confirm'); 
+   };
   const handleCancel = async () => {
+         const redirect = Redirect.create(app);
+
+        redirect.dispatch(Redirect.Action.APP, '/app/confirm'); 
+
     setShowCancelModal(false);
     const response = await fetch("/app/billing", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ actionType: "cancel", plan: activePlan }),
     });
-
     const { confirmationUrl, userErrors } = await response.json();
 
     if (userErrors?.length) {
       alert(userErrors.map((e) => e.message).join(", "));
       return;
     }
-
     if (!confirmationUrl) {
       alert("Failed to cancel subscription. Try again.");
       return;
     }
-
-    window.top.location.href = confirmationUrl;
   };
-
   const plans = [
     {
       name: "base",
@@ -133,57 +135,78 @@ export default function BillingPage() {
   ];
 
   return (
-    <Page title="Billing Plans" subtitle="Choose the plan that fits your needs">
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: "20px",
+  <Page title="Billing Plans" subtitle="Choose the plan that fits your needs">
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(3, 1fr)", 
+        gap: "20px",
+      }}
+    >
+      {/* Static Free Plan */}
+      <Card key="free" title="FREE_PLAN" sectioned>
+        <p style={{ fontWeight: "600", fontSize: "16px" }}>Free Plan</p>
+        <p style={{ fontWeight: "400", fontSize: "12px" }}>Free</p>
+        <ul>
+          <li>Search and add products</li>
+          <li>Maximum 10 products per order</li>
+          <li>Bulk Add to cart</li>
+
+        </ul>
+        {activePlan === null ? (
+          <Button disabled variant="primary">
+            Active
+          </Button>
+        ) : (
+          <Button disabled>Included by default</Button>
+        )}
+      </Card>
+
+      {/* Paid Plans */}
+      {plans.map((plan) => (
+        <Card key={plan.name} title={plan.display_title} sectioned>
+          <p style={{ fontWeight: "600", fontSize: "16px" }}>{plan.display_title}</p>
+          <p style={{ fontWeight: "400", fontSize: "12px" }}>{plan.price}</p>
+          <ul>
+            {plan.features.map((f, i) => (
+              <li key={i}>{f}</li>
+            ))}
+          </ul>
+
+          {activePlan === plan.title ? (
+            <Button tone="critical" onClick={() => setShowCancelModal(true)}>
+              Cancel subscription
+            </Button>
+          ) : (
+            <Button onClick={() => handleSubscribe(plan.title)}>Subscribe</Button>
+          )}
+        </Card>
+      ))}
+    </div>
+
+    {showCancelModal && (
+      <Modal
+        open
+        onClose={() => setShowCancelModal(false)}
+        title="Cancel Subscription"
+        primaryAction={{
+          content: "Yes, cancel",
+          destructive: true,
+          onAction: handleCancel,
         }}
+        secondaryActions={[
+          {
+            content: "No, keep plan",
+            onAction: () => setShowCancelModal(false),
+          },
+        ]}
       >
-        {plans.map((plan) => (
-          <Card key={plan.name} title={plan.display_title} sectioned>
-            <p style={{ fontWeight: "600", fontSize: "16px" }}>{plan.display_title}</p>
-            <p style={{ fontWeight: "400", fontSize: "12px" }}>{plan.price}</p>
-            <ul>
-              {plan.features.map((f, i) => (
-                <li key={i}>{f}</li>
-              ))}
-            </ul>
+        <Modal.Section>
+          <Text>Are you sure you want to cancel your subscription?</Text>
+        </Modal.Section>
+      </Modal>
+    )}
+  </Page>
+);
 
-            {activePlan === plan.title ? (
-              <Button tone="critical" onClick={() => setShowCancelModal(true)}>
-                Cancel subscription
-              </Button>
-            ) : (
-              <Button onClick={() => handleSubscribe(plan.title)}>Subscribe</Button>
-            )}
-          </Card>
-        ))}
-      </div>
-
-      {showCancelModal && (
-        <Modal
-          open
-          onClose={() => setShowCancelModal(false)}
-          title="Cancel Subscription"
-          primaryAction={{
-            content: "Yes, cancel",
-            destructive: true,
-            onAction: handleCancel,
-          }}
-          secondaryActions={[
-            {
-              content: "No, keep plan",
-              onAction: () => setShowCancelModal(false),
-            },
-          ]}
-        >
-          <Modal.Section>
-            <Text>Are you sure you want to cancel your subscription?</Text>
-          </Modal.Section>
-        </Modal>
-      )}
-    </Page>
-  );
 }

@@ -3,7 +3,7 @@
 client_id = "b82877dd3c6cc04deac3b24c3f23d763"
 name = "bulk-order"
 handle = "bulk-order-20"
-application_url = "https://delays-judy-encourages-encouraging.trycloudflare.com"
+application_url = "https://supporters-vacuum-sie-vacancies.trycloudflare.com"
 embedded = true
 
 [build]
@@ -20,10 +20,11 @@ api_version = "2025-07"
   topics = [ "app/scopes_update" ]
   uri = "/webhooks/app/scopes_update"
 
+
   [[webhooks.subscriptions]]
   topics = [ "app_subscriptions/update" ]
   uri = "/webhooks/app-subscription-update"
-
+  
   [app_proxy]
   url = "/app/app-proxy-plan"
   subpath = "bulk-order"
@@ -35,10 +36,9 @@ scopes = "write_products,read_products,write_app_proxy"
 
 [auth]
 redirect_urls = [
-  "https://delays-judy-encourages-encouraging.trycloudflare.com/auth/callback",
-  "https://delays-judy-encourages-encouraging.trycloudflare.com/auth/shopify/callback",
-  "https://delays-judy-encourages-encouraging.trycloudflare.com/api/auth/callback",
-]
+  "https://supporters-vacuum-sie-vacancies.trycloudflare.com",
+  "https://supporters-vacuum-sie-vacancies.trycloudflare.com/auth/shopify/callback",
+  "https://supporters-vacuum-sie-vacancies.trycloudflare.com/auth/callback",]
 
 [pos]
 embedded = false

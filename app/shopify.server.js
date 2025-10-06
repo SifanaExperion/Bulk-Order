@@ -41,7 +41,7 @@ const shopify = shopifyApp({
   },
 
   future: {
-    v3_lineItemBilling: true, // 🔹 enable new billing API
+    v3_lineItemBilling: true, 
   },
 });
 

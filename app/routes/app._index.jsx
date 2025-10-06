@@ -55,12 +55,12 @@ export default function Index() {
                   (e.g., <em>Wholesale</em> or <em>Quick Order</em> page).
                 </List.Item>
                 <List.Item>
-                  Click <strong>Add Block</strong>, then select{" "}
-                  <strong>Bulk Order App Block</strong>.
+                  Click <strong>Add Section</strong>, then select{" "}
+                  <strong>Bulk Order App Block from the App section </strong>.
                 </List.Item>
                 <List.Item>
-                  Save the changes and preview your storefront.
-                </List.Item>
+  Customize the section (from the section settings) and the block (from the block settings) as you prefer. Save the changes and preview your storefront.
+</List.Item>
               </List>
 
               <InlineStack gap="300" align="start" blockAlign="center">
