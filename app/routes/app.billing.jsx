@@ -3,8 +3,8 @@ import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { json } from "@remix-run/node";
 import { authenticate } from "../shopify.server";
-import { Redirect } from "@shopify/app-bridge/actions";
-import { useAppBridge } from "@shopify/app-bridge-react";
+import { useNavigate } from "@remix-run/react";
+
 
 export async function action({ request }) {
   const { billing ,session} = await authenticate.admin(request);
@@ -25,22 +25,22 @@ export async function action({ request }) {
     });
 
     return json({
-      confirmationUrl: response.confirmationUrl,
+      confirmationUrl: response.returnUrl,
       userErrors: response.userErrors || [],
     });
   }
 
   if (actionType === "cancel") {
-    console.log("subscription id",subscription.id);
     const response = await billing.cancel({
     subscriptionId: subscription.id,
     isTest: true,
     prorate: true,
     });
+    console.log("cancel response",response);
     return json({
-      confirmationUrl: response.confirmationUrl,
-      userErrors: response.userErrors || [],
-    });
+  confirmationUrl: response.returnUrl, 
+  userErrors: response.userErrors || [],
+});
   }
 
   return json({ error: "Invalid request" }, { status: 400 });
@@ -70,10 +70,8 @@ export async function loader({ request }) {
 }
 
 export default function BillingPage() {
-    const app = useAppBridge();
-
-
   const { activePlan } = useLoaderData();
+    const navigate = useNavigate();
   const [showCancelModal, setShowCancelModal] = useState(false);
   const handleSubscribe = async (plan) => {
     const response = await fetch("/app/billing", {
@@ -93,30 +91,33 @@ export default function BillingPage() {
       alert("Something went wrong. Please try again.");
       return;
     }
-    redirect.dispatch(Redirect.Action.APP, '/app/confirm'); 
+    navigate(confirmationUrl);
+    window.location.href = confirmationUrl;
    };
   const handleCancel = async () => {
-         const redirect = Redirect.create(app);
+  setShowCancelModal(false);
+    navigate("/app");
+  const response = await fetch("/app/billing", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ actionType: "cancel", plan: activePlan }),
+  });
+  console.log("response of cancel 2",response);
+  const { confirmationUrl, userErrors } = await response.json();
+  if (userErrors?.length) {
+    alert(userErrors.map((e) => e.message).join(", "));
+    return;
+  }
 
-        redirect.dispatch(Redirect.Action.APP, '/app/confirm'); 
+ if (confirmationUrl) {
+  window.location.reload();
+} else {
+  window.location.reload();
+}
 
-    setShowCancelModal(false);
-    const response = await fetch("/app/billing", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ actionType: "cancel", plan: activePlan }),
-    });
-    const { confirmationUrl, userErrors } = await response.json();
 
-    if (userErrors?.length) {
-      alert(userErrors.map((e) => e.message).join(", "));
-      return;
-    }
-    if (!confirmationUrl) {
-      alert("Failed to cancel subscription. Try again.");
-      return;
-    }
-  };
+ 
+}
   const plans = [
     {
       name: "base",
