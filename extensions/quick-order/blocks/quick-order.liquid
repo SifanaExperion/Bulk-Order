@@ -1,343 +1,344 @@
 <style>
-  .quick-order-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  .quick-order-table th, .quick-order-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: center;
-    font-size:{{ block.settings.font_size }};
-    font-family:{{ block.settings.font_family }};
-    color: {{ block.settings.text_color }};
-  }
-  .quick-order-table th {
-    background-color:{{ block.settings.table_header_background }};
-    color: {{block.settings.table_header_text}};
-  }
-  .search-input {
-    border: 0;
-    border-bottom: 2px solid {{ block.settings.search_bar_border_color }};
-    outline: none;
-    box-shadow: none;
-    padding: 6px;
-    text-align: {{ block.settings.search_bar_text_align }};
-    outline: none;
-    box-shadow: none;
-    margin: 20px auto 0;
-    display: block;
-    width: {{ block.settings.search_bar_width_percent }}px;
-    color: {{ block.settings.text_color }};
-    font-size: {{ block.settings.font_size }}px;
-    font-family:{{ block.settings.font_family }}
-  }
-  .suggestions {
-    width: 50%;
-    margin: 0 auto;
-    border: 1px solid #ccc;
-    border-top: none;
-    max-height: 200px;
-    overflow-y: auto;
-    background: white;
-    z-index: 100;
-    position: relative;
-    color:{{block.settings.text_color }};
-    font-size: {{ block.settings.font_size }}px;
-    font-family:{{ block.settings.font_family }};
-
-  }
-  .suggestion-item {
-    padding: 10px;
-    border-top: 1px solid #eee;
-    cursor: pointer;
-  }
-  .suggestion-item:hover {
-    background-color: #f0f0f0;
-  }
-  .buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    padding: 10px;
-    color:{{ block.settings.button_text_color }};
-  }
-  .buttons button {
-    background-color:{{ block.settings.button_color }};
-    color: {{ block.settings.button_text_color }};
-    padding: 10px 16px;
-    border: none;
-    cursor: pointer;
-  }
-  .buttons button:hover{
-      background-color:{{ block.settings.button_hover_color }};
-  }
-  .csv-sku {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      justify-content: space-between;
-      padding: 20px;
-      max-width: 1300px;
-      margin-top:30px;
-      font-family: sans-serif;
-    }
-
-    .csv-sku > div {
-      background-color: #f9f9f9;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-      flex: 1 1 48%;
-      min-width: 300px;
-      box-sizing: border-box;
-    }
-
-    h3 {
-      margin-bottom: 10px;
-    }
-
-    textarea {
+    .quick-order-table {
       width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      resize: vertical;
+      border-collapse: collapse;
+      margin-top: 20px;
     }
-
-    input[type="file"] {
-      margin-top: 10px;
-    }
-
-    .csv-sku p {
-      font-size: {{block.settings.font_size}};
-      color: {{block.settings.text_color}};
+    .quick-order-table th, .quick-order-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+      font-size:{{ block.settings.font_size }};
       font-family:{{ block.settings.font_family }};
-      margin-top: 10px;
+      color: {{ block.settings.text_color }};
     }
-    .remove-button{
-    background-color:{{ block.settings.button_color }};
-    color:{{ block.settings.button_text_color }};;
-    border:none;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
+    .quick-order-table th {
+      background-color:{{ block.settings.table_header_background }};
+      color: {{block.settings.table_header_text}};
     }
+    .search-input {
+      border: 0;
+      border-bottom: 2px solid {{ block.settings.search_bar_border_color }};
+      outline: none;
+      box-shadow: none;
+      padding: 6px;
+      text-align: {{ block.settings.search_bar_text_align }};
+      outline: none;
+      box-shadow: none;
+      margin: 20px auto 0;
+      display: block;
+      width: {{ block.settings.search_bar_width_percent }}px;
+      color: {{ block.settings.text_color }};
+      font-size: {{ block.settings.font_size }}px;
+      font-family:{{ block.settings.font_family }}
+    }
+    .suggestions {
+      width: 50%;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      border-top: none;
+      max-height: 200px;
+      overflow-y: auto;
+      background: white;
+      z-index: 100;
+      position: relative;
+      color:{{block.settings.text_color }};
+      font-size: {{ block.settings.font_size }}px;
+      font-family:{{ block.settings.font_family }};
 
-    .buttons,
-    .csv-sku button {
-      margin-top: 15px;
     }
-
-    .csv-sku button {
+    .suggestion-item {
+      padding: 10px;
+      border-top: 1px solid #eee;
+      cursor: pointer;
+    }
+    .suggestion-item:hover {
+      background-color: #f0f0f0;
+    }
+    .buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 10px;
+      color:{{ block.settings.button_text_color }};
+    }
+    .buttons button {
       background-color:{{ block.settings.button_color }};
       color: {{ block.settings.button_text_color }};
+      padding: 10px 16px;
+      border: none;
+      cursor: pointer;
+    }
+    .buttons button:hover{
+        background-color:{{ block.settings.button_hover_color }};
+    }
+    .csv-sku {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+        justify-content: space-between;
+        padding: 20px;
+        max-width: 1300px;
+        margin-top:30px;
+        font-family: sans-serif;
+      }
+
+      .csv-sku > div {
+        background-color: #f9f9f9;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+        flex: 1 1 48%;
+        min-width: 300px;
+        box-sizing: border-box;
+      }
+
+      h3 {
+        margin-bottom: 10px;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        resize: vertical;
+      }
+
+      input[type="file"] {
+        margin-top: 10px;
+      }
+
+      .csv-sku p {
+        font-size: {{block.settings.font_size}};
+        color: {{block.settings.text_color}};
+        font-family:{{ block.settings.font_family }};
+        margin-top: 10px;
+      }
+      .remove-button{
+      background-color:{{ block.settings.button_color }};
+      color:{{ block.settings.button_text_color }};;
+      border:none;
       padding: 10px 18px;
       border: none;
       border-radius: 6px;
       font-size: 14px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      }
+
+      .buttons,
+      .csv-sku button {
+        margin-top: 15px;
+      }
+
+      .csv-sku button {
+        background-color:{{ block.settings.button_color }};
+        color: {{ block.settings.button_text_color }};
+        padding: 10px 18px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .csv-sku button:hover {
+        background-color:{{ block.settings.button_hover_color }};
+      }
+
+      .csv-sku a {
+        color:#8686AC;
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      .csv-sku a:hover {
+        text-decoration: underline;
+      }
+      .custom-file-upload-area {
+      cursor: pointer;
+      display: block;
+      text-align: center;
+    }
+    .upload-box {
+      border: 2px dashed #ccc;
+      border-radius: 8px;
+      padding: 40px 20px;
+      background-color: #f9f9f9;
+      transition: border-color 0.3s;
     }
 
-    .csv-sku button:hover {
-      background-color:{{ block.settings.button_hover_color }};
+    .upload-box:hover {
+      border-color: #999;
     }
 
-    .csv-sku a {
-      color:#8686AC;
-      text-decoration: none;
-      font-size: 14px;
+    .upload-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
     }
-
-    .csv-sku a:hover {
+    .choose-file {
+      color: #005eff;
       text-decoration: underline;
+      font-weight: bold;
     }
-    .custom-file-upload-area {
-    cursor: pointer;
-    display: block;
-    text-align: center;
-  }
-  .upload-box {
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    padding: 40px 20px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s;
-  }
+    .textArea{
+       color:{{block.settings.text_color }};
+      font-size: {{ block.settings.font_size }}px;
+      font-family:{{ block.settings.font_family }};
 
-  .upload-box:hover {
-    border-color: #999;
-  }
-
-  .upload-icon {
-    font-size: 30px;
-    margin-bottom: 10px;
-  }
-  .choose-file {
-    color: #005eff;
-    text-decoration: underline;
-    font-weight: bold;
-  }
-  .textArea{
-     color:{{block.settings.text_color }};
-    font-size: {{ block.settings.font_size }}px;
-    font-family:{{ block.settings.font_family }};
-
-  }
-
-  .hidden-file-input {
-    display: none;
-  }
-  .file-name-display {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #333;
     }
-    .sample-download{
-    color:{{block.settings.text_color }};
-    font-size: {{ block.settings.font_size }}px;
-    font-family:{{ block.settings.font_family }};
+
+    .hidden-file-input {
+      display: none;
     }
-    .table-pagination {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-    .pagination {
-      margin-top: 10px;
+    .file-name-display {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #333;
+      }
+      .sample-download{
+      color:{{block.settings.text_color }};
+      font-size: {{ block.settings.font_size }}px;
+      font-family:{{ block.settings.font_family }};
+      }
+      .table-pagination {
       display: flex;
-      gap: 6px;
-
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
-    .pagination button {
-    padding: 1px 2px;
-    margin: 2px;
-    border: none;
-    background: white;
-    cursor: pointer;
-    color:black;
-  }
-   .pagination button:hover{
-  color: orange;
-  }
-  .pagination button:disabled {
-    cursor: default;
+      .pagination {
+        margin-top: 10px;
+        display: flex;
+        gap: 6px;
+
+      }
+      .pagination button {
+      padding: 1px 2px;
+      margin: 2px;
+      border: none;
+      background: white;
+      cursor: pointer;
+      color:black;
+    }
+     .pagination button:hover{
     color: orange;
-  }
-  .search-wrapper {
-    display:flex;
-    gap:none;
-  }
+    }
+    .pagination button:disabled {
+      cursor: default;
+      color: orange;
+    }
+    .search-wrapper {
+      display:flex;
+      gap:none;
+    }
 
-  .search-input {
-    padding-right: 30px;
-    height: 35px;
+    .search-input {
+      padding-right: 30px;
+      height: 35px;
+      font-size: 14px;
+      width: {{ block.settings.search_bar_width_percent }}px;
+    }
+    .search-container {
+      position: relative;
+      width: fit-content;
+      margin: 15px auto 0;
+      font-family: {{ block.settings.font_family }};
+      color: {{ block.settings.text_color }};
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: {{ block.settings.text_color }};
+      font-size: {{ block.settings.font_size }}px;
+      pointer-events: none;
+    }
+
+   #quick-order-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    min-width: 220px;
+    max-width: 300px;
+    padding: 14px 18px;
+    border-radius: 8px;
     font-size: 14px;
-    width: {{ block.settings.search_bar_width_percent }}px;
-  }
-  .search-container {
-    position: relative;
-    width: fit-content;
-    margin: 15px auto 0;
-    font-family: {{ block.settings.font_family }};
-    color: {{ block.settings.text_color }};
-  }
-
-  .search-icon {
-    position: absolute;
-    left: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: {{ block.settings.text_color }};
-    font-size: {{ block.settings.font_size }}px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #4caf50; /* Green success */
+    opacity: 0;
     pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 9999;
   }
 
- #quick-order-toast {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  min-width: 220px;
-  max-width: 300px;
-  padding: 14px 18px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
-  background-color: #4caf50; /* Green success */
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 9999;
-}
+  #quick-order-toast.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
 
-#quick-order-toast.show {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
+  #quick-order-toast.success {
+    background-color: #b2e2b3ff; /* success color */
+    color: white;
+  }
 
-#quick-order-toast.success {
-  background-color: #b2e2b3ff; /* success color */
-  color: white;
-}
-
-    #quick-order-toast.error {
-      background: #dc3545;
-    }
-
-    @media (max-width: 768px) {
-      .csv-sku {
-        flex-direction: column;
+      #quick-order-toast.error {
+        background: #dc3545;
       }
 
-      .csv-sku > div {
-        flex: 1 1 100%;
+      @media (max-width: 768px) {
+        .csv-sku {
+          flex-direction: column;
+        }
+
+        .csv-sku > div {
+          flex: 1 1 100%;
+        }
       }
-    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
- {% assign plan_type = shop.metafields.app_settings.plan_name%}
-  {% if plan_type == 'FREE_PLAN' %}
-    {% assign max_products = 5 %}
-  {% elsif plan_type == 'BASIC_PLAN' %}
-    {% assign max_products = 20 %}
-  {% elsif plan_type == 'PRO_PLAN' %}
-    {% assign max_products = 'infinity' %}
-  {% else %}
-    {% assign max_products = 5 %}
-  {% endif %}
+{% assign plan_type = shop.metafields.app_settings.plan_name %}
+{% if plan_type == 'FREE_PLAN' %}
+  {% assign max_products = 5 %}
+{% elsif plan_type == 'BASIC_PLAN' %}
+  {% assign max_products = 20 %}
+{% elsif plan_type == 'PRO_PLAN' %}
+  {% assign max_products = 'infinity' %}
+{% else %}
+  {% assign max_products = 5 %}
+{% endif %}
 <div class="page-width">
-    <div class="search-container">
-      <i class="fas fa-search search-icon"></i>
-      <input type="text" class="search-input" id="quick-order-search" placeholder="Search by product name">
-    </div>
-    <div class="suggestions" id="quick-order-suggestions"></div> 
-    <div class="table-pagination">
-      <table class="quick-order-table">
-        <thead>
-          <tr>
-            <th>Item(s)</th>
-            <th>Image</th>
-            <th>Qty</th>
-            <th>Subtotal</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="quick-order-body"></tbody>
-      </table>
-      <div class="pagination" id="pagination"></div>
-    </div>
-    <div id="productLimitMessage" style="margin-top: 5px; font-size: 14px; color: red;"></div>
-    <div class="csv-sku" id="csv-sku">
-            {% if plan_type == 'PRO_PLAN' %}
+  <div class="search-container">
+    <i class="fas fa-search search-icon"></i>
+    <input type="text" class="search-input" id="quick-order-search" placeholder="Search by product name">
+  </div>
+  <div class="suggestions" id="quick-order-suggestions"></div>
+  <div class="table-pagination">
+    <table class="quick-order-table">
+      <thead>
+        <tr>
+          <th>Item(s)</th>
+          <th>Image</th>
+          <th>Variant</th>
+          <th>Qty</th>
+          <th>Subtotal</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="quick-order-body"></tbody>
+    </table>
+    <div class="pagination" id="pagination"></div>
+  </div>
+  <div id="productLimitMessage" style="margin-top: 5px; font-size: 14px; color: red;"></div>
+  <div class="csv-sku" id="csv-sku">
+    {% if plan_type == 'PRO_PLAN' %}
       <div id="handle-bulk">
         <h3>Enter multiple products</h3>
         <textarea
@@ -353,8 +354,8 @@
         </p>
         <button onclick="handleBulkEntry()">ADD TO LIST</button>
       </div>
-      {% endif %}
-      {% if plan_type != 'FREE_PLAN' %}
+    {% endif %}
+    {% if plan_type != 'FREE_PLAN' %}
       <div id="file-upload-section">
         <h3>Add from file</h3>
         <label for="fileUpload" class="custom-file-upload-area">
@@ -378,47 +379,18 @@
           >
         </div>
       </div>
-      {% endif %}
-    </div>
-    <div class="buttons">
-      <button onclick="clearQuickOrderList()">CLEAR ALL LIST</button>
-      <button onclick="quickOrderAddToCart()">ADD TO CART</button>
-      <button onclick="quickOrderCheckout()">CHECKOUT</button>
-    </div>
+    {% endif %}
   </div>
+  <div class="buttons">
+    <button onclick="clearQuickOrderList()">CLEAR ALL LIST</button>
+    <button onclick="quickOrderAddToCart()">ADD TO CART</button>
+    <button onclick="quickOrderCheckout()">CHECKOUT</button>
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js" async></script>
 <div id="quick-order-toast"></div>
 <script>
-  {% comment %} const loadPlanData = async () => {
-    try {
-      const response = await fetch('/apps/bulk-order');
-      const shopPlanData = await response.json();
-      console.log('plan data', shopPlanData);
-      return shopPlanData;
-    } catch (err) {
-      console.error('Error fetching plan data', err);
-    }
-  }; {% endcomment %}
-
-  {% comment %} async function applyFeatureAccess() {
-    const shopPlanData = await loadPlanData();
-    console.log('shopPlandata', shopPlanData);
-    const features = shopPlanData.features;
-    const uploadSection = document.querySelector('#file-upload-section');
-    if (!uploadSection) return;
-    if (!features.csvUpload) {
-      uploadSection.style.display = 'none';
-    } else {
-      uploadSection.style.display = 'block';
-    }
-    if (!features.multipleHandle) {
-      document.querySelector('#handle-bulk').style.display = 'none';
-    } else {
-      document.querySelector('#handle-bulk').style.display = 'block';
-    }
-  }
-  applyFeatureAccess(); {% endcomment %}
-
+ 
   const ITEMS_PER_PAGE = 5;
   let currentPage = 1;
   const fileInput = document.getElementById('fileUpload');
@@ -535,12 +507,12 @@ if (plan !== "FREE_PLAN") {
     const response = await fetch(
       `/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=5`
     );
-
     if (!response.ok) {
       throw new Error('Failed to fetch suggestions');
     }
 
     const data = await response.json();
+    console.log('Suggestion data:', data.resources.results);
     return data.resources.results;
   };
 
@@ -563,7 +535,7 @@ if (plan !== "FREE_PLAN") {
       messageBox.textContent = `Please select a file`;
       messageBox.style.color = 'red';
       setTimeout(() => {
-        messageBox.textContent = '';
+        messageBox.textContent = '';''
       }, 5000);
       return;
     }
@@ -576,15 +548,16 @@ if (plan !== "FREE_PLAN") {
         skipEmptyLines: true,
         complete: async function (results) {
           let hasError = false;
-
           for (const row of results.data) {
             const handle = row.handle?.trim();
+            const variant = row.variant||''; 
+            console.log('variant:', variant);
             if (!handle) {
               hasError = true;
               continue;
-            }
-
+            } 
             const product = await getProductByHandle(handle);
+            console.log('Parsed row:', row, 'Fetched product:', product);
             if (!product || !product.variants?.length) {
               hasError = true;
               continue;
@@ -666,7 +639,9 @@ if (plan !== "FREE_PLAN") {
   }
 
   async function addToQuickOrder(product, quantity) {
-    const variantId = await fetchDefaultVariantId(product.handle);
+    const ProductVariant = await fetchDefaultVariantId(product.handle);
+    const variant= ProductVariant.variants;
+    const selectedVariantId = variant[0]?.id;
     const quantityToAdd = parseInt(quantity);
     const productLimitMessage = document.getElementById('productLimitMessage');
 
@@ -676,29 +651,26 @@ if (plan !== "FREE_PLAN") {
     }
     const currentProducts = quickOrderItems.length;
    const maxProducts = {{ max_products | json }};
-    const existingIndex = quickOrderItems.findIndex((item) => item.variantId === variantId);
+    const existingIndex = quickOrderItems.findIndex((item) => item.selectedVariantId === selectedVariantId);
 
     if (existingIndex === -1 && currentProducts >= maxProducts && maxProducts !== 'infinity') {
       productLimitMessage.textContent = ` You can only add up to ${maxProducts} products. Please add these products to cart and checkout, and clear your list to add more`;
       return;
     }
-
-    // 🔹 Update or add product
     if (existingIndex !== -1) {
       quickOrderItems[existingIndex].quantity += quantityToAdd;
     } else {
     quickOrderItems.push({
-  title: product.title,
+  title: product.handle,
   image: product.featured_image?.url 
         || product.image 
         || (product.images && product.images.length > 0 ? product.images[0] : null), 
-  variantId: variantId,
+  variants: variant,
+  selectedVariantId: selectedVariantId,
   price: parseFloat(product.price),
   quantity: quantityToAdd,
 });
-
     }
-
     renderTable();
   }
 
@@ -715,6 +687,24 @@ if (plan !== "FREE_PLAN") {
       <td>${item.title}</td>
       <td><img src="${item.image}" alt="${item.title}" style="max-width: 60px; max-height: 60px;" /></td>
       <td>
+    <select onchange="updateVariant(${start + i}, this.value)">
+      ${
+        item.variants && item.variants.length
+          ? item.variants
+              .map(
+                (variant) => `
+                  <option value="${variant.id}" ${
+                    item.selectedVariantId === variant.id ? "selected" : ""
+                  }>
+                    ${variant.title}
+                  </option>`
+              )
+              .join("")
+          : `<option disabled>No variants</option>`
+      }
+    </select>
+  </td>
+      <td>
         <input type="number" value="${item.quantity}" min="1" onchange="updateQty(${start + i}, this.value)" />
       </td>
       <td>${(item.price * item.quantity).toFixed(2)}</td>
@@ -725,6 +715,31 @@ if (plan !== "FREE_PLAN") {
       .join('');
     renderPagination();
   }
+function updateVariant(index, variantId) {
+  variantId = parseInt(variantId);
+  if (!quickOrderItems || !quickOrderItems[index]) return;
+  const selectedVariant = quickOrderItems[index].variants.find(
+    (variant) => variant.id === variantId
+  );
+
+  if (selectedVariant) {
+    quickOrderItems[index].selectedVariantId = selectedVariant.id;
+    quickOrderItems[index].selectedVariantTitle = selectedVariant.title;
+
+    console.log(
+      `Updated variant for ${quickOrderItems[index].title}:`,
+      selectedVariant
+    );
+
+    if (selectedVariant.price) {
+      quickOrderItems[index].price = parseFloat(selectedVariant.price);
+      renderTable(); 
+    }
+  } else {
+    console.warn("Variant not found for index:", index, "and variantId:", variantId);
+  }
+}
+
 
   function renderPagination() {
     const paginationDiv = document.getElementById('pagination');
@@ -763,9 +778,10 @@ if (plan !== "FREE_PLAN") {
   }
 
   async function quickOrderAddToCart() {
+    console.log('Adding to cart:', quickOrderItems);
     const formData = {
       items: quickOrderItems.map((item) => ({
-        id: item.variantId,
+        id: item.selectedVariantId,
         quantity: item.quantity,
       })),
     };
@@ -781,11 +797,11 @@ if (plan !== "FREE_PLAN") {
 
       if (!response.ok) {
         const errorData = await response.json();
-        showToast(errorData.description || ' Check if stocks are available', 'error');
+        showToast('Check if the products are available and in stock before adding them to the cart.' || ' Check if stocks are available', 'error');
         return;
       }
       await response.json();
-      showToast('Item added to cart', 'success');
+     window.location.href = '/cart';
       clearQuickOrderList();
     } catch (err) {
       console.error('Add to cart failed', err);
@@ -800,13 +816,14 @@ if (plan !== "FREE_PLAN") {
 
     setTimeout(() => {
       toast.className = toast.className.replace('show', '');
-    }, 3000); // hide after 3s
+    }, 3000); 
   }
   async function fetchDefaultVariantId(handle) {
     const res = await fetch(`/products/${handle}.js`);
     if (!res.ok) throw new Error('Failed to fetch product');
     const product = await res.json();
-    return product.variants[0]?.id;
+    console.log('Fetched product for variant ID:', product);
+    return product;
   }
   function quickOrderCheckout() {
     window.location.href = '/checkout';
@@ -932,8 +949,6 @@ if (plan !== "FREE_PLAN") {
         { "value": "right", "label": "Right" }
       ]
     }
-  ],
-  
-  
+  ]
 }
 {% endschema %}
